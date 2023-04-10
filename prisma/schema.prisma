@@ -1,0 +1,87 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model bairro {
+  idbairro        Int               @id @default(autoincrement())
+  nome            String            @db.VarChar(255)
+  idcidade        Int?
+  valortele       Float?
+  cidade          cidade?           @relation(fields: [idcidade], references: [idcidade], onDelete: Cascade, onUpdate: NoAction)
+  enderecocliente enderecocliente[]
+}
+
+model cidade {
+  idcidade Int      @id @default(autoincrement())
+  nome     String   @db.VarChar(255)
+  idestado Int?
+  bairro   bairro[]
+  estado   estado?  @relation(fields: [idestado], references: [idestado], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model cliente {
+  idcliente       Int               @id @default(autoincrement())
+  nome            String            @db.VarChar(255)
+  telefone        String            @db.VarChar(20)
+  enderecocliente enderecocliente[]
+  pedido          pedido[]
+}
+
+model enderecocliente {
+  idenderecocliente Int      @id @default(autoincrement())
+  idcliente         Int?
+  endereco          String   @db.VarChar(255)
+  numero            String   @db.VarChar(10)
+  complemento       String?  @db.VarChar(255)
+  idbairro          Int?
+  bairro            bairro?  @relation(fields: [idbairro], references: [idbairro], onDelete: Cascade, onUpdate: NoAction)
+  cliente           cliente? @relation(fields: [idcliente], references: [idcliente], onDelete: Cascade, onUpdate: NoAction)
+  pedido            pedido[]
+}
+
+model estado {
+  idestado Int      @id @default(autoincrement())
+  nome     String   @db.VarChar(255)
+  idpais   Int?
+  sigla    String?  @db.Char(2)
+  cidade   cidade[]
+  pais     pais?    @relation(fields: [idpais], references: [idpais], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model pais {
+  idpais Int      @id @default(autoincrement())
+  nome   String   @db.VarChar(255)
+  sigla  String?  @db.Char(2)
+  estado estado[]
+}
+
+model pedido {
+  idpedido          Int              @id @default(autoincrement())
+  idcliente         Int?
+  idenderecocliente Int?
+  valortotal        Decimal          @db.Decimal(10, 2)
+  cliente           cliente?         @relation(fields: [idcliente], references: [idcliente], onDelete: Cascade, onUpdate: NoAction)
+  enderecocliente   enderecocliente? @relation(fields: [idenderecocliente], references: [idenderecocliente], onDelete: Cascade, onUpdate: NoAction)
+  produtopedido     produtopedido[]
+}
+
+model produto {
+  idproduto     Int             @id @default(autoincrement())
+  nome          String          @db.VarChar(255)
+  descricao     String?
+  valor         Decimal         @db.Decimal(10,2)
+  produtopedido produtopedido[]
+}
+
+model produtopedido {
+  idprodutopedido Int      @id @default(autoincrement())
+  idproduto       Int?
+  idpedido        Int?
+  pedido          pedido?  @relation(fields: [idpedido], references: [idpedido], onDelete: Cascade, onUpdate: NoAction)
+  produto         produto? @relation(fields: [idproduto], references: [idproduto], onDelete: Cascade, onUpdate: NoAction)
+}
