@@ -16,3 +16,4 @@ export class BuscaController {
     return res.send(produto);
   }
 }
+
