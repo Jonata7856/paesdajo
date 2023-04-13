@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import prisma from "../../database/PrismaClient";
-
+//CADASTRA O BAIRRO 
 export class CadastrobairroController {
   async handle(req: Request, res: Response): Promise<Response> {
     const { nome, idcidade, valortele } = req.body;
