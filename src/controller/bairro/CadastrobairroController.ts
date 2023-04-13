@@ -5,12 +5,9 @@ export class CadastrobairroController {
   async handle(req: Request, res: Response): Promise<Response> {
     const { nome, idcidade, valortele } = req.body;
 
-    // Validar os dados de entrada
     if (!nome || !idcidade || !valortele) {
       return res.status(400).send("Dados de entrada inválidos");
     }
-
-    // Cadastrar o bairro no banco de dados
     try {
       const bairro = await prisma.bairro.create({
         data: { nome, idcidade, valortele },
