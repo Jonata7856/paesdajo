@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import cliente from './cliente';
 import produto from './produto';
-import cidade from './lista-cidade';
+import cidade from './cidade';
 import bairro from './bairro';
 import endereco from './endereco';
 
