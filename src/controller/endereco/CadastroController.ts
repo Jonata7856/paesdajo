@@ -4,23 +4,18 @@ export class CadastroController {
   async handle(req: Request, res: Response): Promise<Response> {
     const { idcliente, endereco, numero, complemento, idbairro } = req.body;
 
-    // Validações
     if (!idcliente || isNaN(idcliente)) {
       return res.status(400).send("O campo 'idcliente' é obrigatório e deve ser um número.");
     }
-
     if (!endereco || endereco.trim().length === 0) {
       return res.status(400).send("O campo 'endereco' é obrigatório.");
     }
-
     if (!numero || numero.trim().length === 0) {
       return res.status(400).send("O campo 'numero' é obrigatório.");
     }
-
     if (idbairro && isNaN(idbairro)) {
       return res.status(400).send("O campo 'idbairro' deve ser um número.");
     }
-
     try {
       await prisma.enderecocliente.create({
         data: { idcliente, endereco, numero, complemento, idbairro },

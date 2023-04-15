@@ -8,14 +8,12 @@ export class BuscaController {
       if (isNaN(idcliente)) {
         return res.status(400).send("O idcliente fornecido não é um número válido.");
       }
-
       const enderecocliente = await prisma.enderecocliente.findFirst({
         where: { idcliente },
       });
       if (!enderecocliente) {
         return res.status(404).send("Endereço não encontrado para o idcliente fornecido.");
       }
-
       return res.send(enderecocliente);
     } catch (error) {
       console.error("Erro ao buscar endereço do cliente:", error);
