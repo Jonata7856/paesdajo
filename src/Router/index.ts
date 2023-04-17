@@ -5,6 +5,7 @@ import cidade from './cidade';
 import bairro from './bairro';
 import endereco from './endereco';
 import pedido from './pedido/pedido';
+import produtopedido from './produtopedido/produtopedido';
 
 const router = Router();
 
@@ -14,5 +15,6 @@ router.use("/cidade", cidade)
 router.use("/bairro", bairro)
 router.use("/endereco", endereco)
 router.use("/pedido", pedido)
+router.use("/produtopedido", produtopedido)
 
 export default router;
