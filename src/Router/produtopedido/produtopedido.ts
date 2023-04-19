@@ -1,5 +1,5 @@
 import { Router, request, response }  from "express";
-import {CadastroController} from '../../controller/produtopedido/CadastroController';
+import {CadastroController} from '../../controller/produtopedido/CadastropedidoController';
 import { BuscaController} from '../../controller/produtopedido/BuscaController';
 import { EditarController } from '../../controller/produtopedido/EditarController';
 

@@ -10,13 +10,19 @@ export class ExcluiController {
     }
 
     try {
-      const bairro = await prisma.bairro.delete({
+      const bairroExistente = await prisma.bairro.findUnique({
+        where: { idbairro: parseInt(id) },
+      });
+      if (!bairroExistente) {
+        return res.status(404).send("Bairro não encontrado nos registros!");
+      }
+      await prisma.bairro.delete({
         where: { idbairro: parseInt(id) },
       });
       return res.send("Bairro excluído com sucesso!");
     } catch (err) {
       console.error(err);
-      return res.status(500).send("Erro ao excluir o bairro");
+      return res.status(500).send("Erro ao excluir o Bairro!");
     }
   }
 }
